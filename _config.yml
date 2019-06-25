@@ -78,4 +78,8 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: git@github.com:LinWeiLong/LinWeiLong.github.io.git
+  branch: master
+
+
