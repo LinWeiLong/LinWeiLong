@@ -88,11 +88,11 @@ index_with_subtitle: false
 # Value before `||` delimeter is the target link.
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 menu:
-  home: / || home
-  #about: /about/ || user
-  #tags: /tags/ || tags
+  home: /
+  about: /about
+  tags: /tags
   #categories: /categories/ || th
-  archives: /archives/ || archive
+  archives: /archives
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat
@@ -107,10 +107,10 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
+# scheme: Muse
 #scheme: Mist
 #scheme: Pisces
-#scheme: Gemini
+scheme: Gemini
 
 
 # ---------------------------------------------------------------
@@ -178,8 +178,8 @@ sidebar:
   #  - always  expand for all pages automatically
   #  - hide    expand only when click on the sidebar toggle icon.
   #  - remove  Totally remove sidebar including sidebar toggle.
-  display: post
-  #display: always
+  #display: post
+  display: always
   #display: hide
   #display: remove
 
@@ -391,7 +391,7 @@ valine:
 #youyan_uid: your uid
 
 # Support for LiveRe comments system.
-# You can get your uid from https://livere.com/insight/myCode (General web site)
+# You can get your uid from https: //livere.com/insight/myCode (General web site)
 #livere_uid: your uid
 
 # Gitment
@@ -403,7 +403,7 @@ gitment:
   count: true # Show comments count in post meta area
   lazy: false # Comments lazy loading with a button
   cleanly: false # Hide 'Powered by ...' on footer, and more
-  language: # Force language, or auto switch by theme
+  language: zh-Hans # Force language, or auto switch by theme
   github_user: # MUST HAVE, Your Github ID
   github_repo: # MUST HAVE, The repo you use to store Gitment comments
   client_id: # MUST HAVE, Github client id for the Gitment

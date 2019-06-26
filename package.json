@@ -6,8 +6,8 @@
     "version": "3.9.0"
   },
   "scripts": {
-    "start": "hexo serve",
-    "build": "hexo deploy",
+    "dev": "hexo serve",
+    "build": "hexo clean && hexo generate && hexo deploy",
     "new": "hexo new"
   },
   "dependencies": {
