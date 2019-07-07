@@ -120,7 +120,7 @@
 
 
 
-  <title>Willong's Blog</title>
+  <title>Git submodule使用指南 | Willong's Blog</title>
   
 
 
@@ -139,8 +139,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -233,151 +232,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/wechat-backword-refresh/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Willong lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Willong's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/07/wechat-backword-refresh/" itemprop="url">微信返回Vue SPA不刷新页面的问题记录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-07T18:23:40+08:00">2019-07-07</time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="问题表现"><a href="#问题表现" class="headerlink" title="问题表现"></a>问题表现</h1><p>在微信内，打开SAP的页面SPA-a，从SPA-a打开外部页面B，从B再返回SPA-a的话，SPA-a页面会呈现Vue数据绑定特征失效的症状，比如load完接口，loading窗口不会根据v-show变化而消失，点击路由跳转SPA，页面也没有出现变化，但实际上路由的hash已经变化了，但是页面内容没有跟着变化。</p>
-<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>本来只是以为是页面loading窗口没有隐藏之类的问题，对loading的值进行核对，观察v-show绑定的值是否有变化，实际上，是有对store里面的loadingSHOW进行赋值的，但template没有变化或者没有进行重新render。</p>
-<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><blockquote>
-<p><strong>浏览器前进/后退缓存</strong></p>
-<p>这里提到一个概念，浏览器前进/后退缓存(Backward/Forward Cache, BF Cache)，当然也有人叫 disk Cache。<br>BF Cache 是一种浏览器优化， HTML 标准并未指定其如何进行缓存，因此缓存行为是各浏览器各自实现，所以不尽相同。<br>由于不是 HTTP 缓存，所以通过头文件缓存设置 no-cache 是无效的。当然也不能以 HTTP 缓存机制来理解 BF Cache。</p>
-<p>作者：Sakura同志<br>链接：<a href="https://juejin.im/post/5caf3462e51d456e7e297b9e" target="_blank" rel="noopener">https://juejin.im/post/5caf3462e51d456e7e297b9e</a><br>来源：掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-</blockquote>
-<p>形成这样的根本原因是微信对于其内置的浏览器进行的“优化”，在iOS下返回SPA-a的时候，微信不会重新请求任何HTML/JS/CSS静态资源，只会把JS重新执行一遍。</p>
-<p>但是按照我的个人理解，JS重新执行一遍，应该也能够形成一样的执行效果才对。实际上的vue整个的生命周期也确实有重新执行，但就是已经失去了双向数据绑定的响应了。</p>
-<p>但实际上表现和期望的不一致，可能是我的理解有偏差。</p>
-<h1 id="问题调试过程"><a href="#问题调试过程" class="headerlink" title="问题调试过程"></a>问题调试过程</h1><ol>
-<li>尝试一：一开始的思路是着重于在返回SPA-a的时候，尝试去刷新SPA-a。由于sessionStorage会计算路由的历史记录count的计数，以此为判断当count等于1（为什么等于1，有另外原因，不在此细说）的时候，尝试使用location.reload()去刷新页面。<ol>
-<li>结果，失败，reaload也没有重新加载页面。</li>
-</ol>
-</li>
-<li>尝试二：由于SPA-a是之前相同业务的迁移，而之前业务并没有出现过这样的情况。通过对比，猜测是由于之前业务是使用动态引入路由页面的，所以对SPA-a的项目进行了相同改造。<ol>
-<li>结果，成功。</li>
-</ol>
-</li>
-</ol>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><ol>
-<li>微信会对之前访问过的页面进行 前进/后退缓存(disk cache)，返回被缓存的页面不会执行静态资源的请求，只会重新执行JS。</li>
-<li>vue SPA在被disk cache之后，返回SPA，不会具备双向绑定的特性。</li>
-<li>第二点可以用异步引入路由组件解决。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -407,9 +264,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/25/git-submodule-usege/" itemprop="url">Git submodule使用指南</a></h1>
+          <h1 class="post-title" itemprop="name headline">Git submodule使用指南</h1>
         
 
         <div class="post-meta">
@@ -457,9 +312,7 @@
       
 
       
-        
-          
-            <h2 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h2><p>相信任何开发，都会遇到一种情况。在做不同的项目，但是又都会使用到一些常用的方法/组件/代码块等等。<br>作为一个追求优雅的开发人员，肯定不能接受一段代码到处复制粘贴的操作。而且一旦这段代码日后需要更新，到处粘贴的话就需要全局搜索然后含泪修改了。<br>那么有没有一种办法，能够作为一些公共代码的“栖息地”，可以做到一处编写，到处使用呢？</p>
+        <h2 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h2><p>相信任何开发，都会遇到一种情况。在做不同的项目，但是又都会使用到一些常用的方法/组件/代码块等等。<br>作为一个追求优雅的开发人员，肯定不能接受一段代码到处复制粘贴的操作。而且一旦这段代码日后需要更新，到处粘贴的话就需要全局搜索然后含泪修改了。<br>那么有没有一种办法，能够作为一些公共代码的“栖息地”，可以做到一处编写，到处使用呢？</p>
 <h2 id="答案是有的。"><a href="#答案是有的。" class="headerlink" title="答案是有的。"></a><em>答案是有的。</em></h2><h2 id="寻找工具"><a href="#寻找工具" class="headerlink" title="寻找工具"></a>寻找工具</h2><p>经过在知名404网站上一番搜寻，找到了Git内置的一个功能：submodule。</p>
 <h3 id="什么是submodule"><a href="#什么是submodule" class="headerlink" title="什么是submodule"></a>什么是submodule</h3><blockquote>
 <p>有种情况我们经常会遇到：某个工作中的项目需要包含并使用另一个项目。 也许是第三方库，或者你独立开发的，用于多个父项目的库。 现在问题来了：你想要把它们当做两个独立的项目，同时又想在一个项目中使用另一个。</p>
@@ -544,8 +397,6 @@
 <li><a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97" target="_blank" rel="noopener">Git - 子模块</a></li>
 </ol>
 
-          
-        
       
     </div>
     
@@ -560,144 +411,42 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/24/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Willong lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Willong's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/24/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-24T15:19:47+08:00">2019-06-24</time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/git/" rel="tag"># git</a>
           
-            
+            <a href="/tags/工作-基础建设-技巧指南/" rel="tag"># 工作/基础建设/技巧指南</a>
           
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/24/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/07/wechat-backword-refresh/" rel="prev" title="微信返回Vue SPA不刷新页面的问题记录">
+                微信返回Vue SPA不刷新页面的问题记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -707,10 +456,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -718,6 +468,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -738,8 +492,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -790,6 +553,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题场景"><span class="nav-number">1.</span> <span class="nav-text">问题场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案是有的。"><span class="nav-number">2.</span> <span class="nav-text">答案是有的。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻找工具"><span class="nav-number">3.</span> <span class="nav-text">寻找工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是submodule"><span class="nav-number">3.1.</span> <span class="nav-text">什么是submodule</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用"><span class="nav-number">4.</span> <span class="nav-text">如何使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加子模块"><span class="nav-number">4.1.</span> <span class="nav-text">添加子模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clone已经包含子模块的项目"><span class="nav-number">4.2.</span> <span class="nav-text">clone已经包含子模块的项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-submodule-工作流"><span class="nav-number">4.3.</span> <span class="nav-text">git submodule 工作流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">5.</span> <span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对本地的子模块进行修改"><span class="nav-number">5.1.</span> <span class="nav-text">对本地的子模块进行修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并子模块的改动"><span class="nav-number">5.2.</span> <span class="nav-text">合并子模块的改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些我个人的理解"><span class="nav-number">5.3.</span> <span class="nav-text">一些我个人的理解</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -919,6 +698,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
 
   
 
