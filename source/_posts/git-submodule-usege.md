@@ -1,7 +1,7 @@
 ---
 title: Git submodule使用指南
 date: 2019-06-25 21:00:19
-tags: [git, 工作/基础建设/技巧指南]
+tags: [git, 技巧指南]
 ---
 
 ## 问题场景
