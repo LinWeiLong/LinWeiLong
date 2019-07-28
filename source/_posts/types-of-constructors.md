@@ -175,6 +175,43 @@ function Person (name, age, gender) {
 ```
 
 ## 六、寄生构造函数模式
+《高程》提到如果上面的模式都不适用的时候，可以使用寄生构造函数模式，但是我暂时没想到什么场景下有这样的需求。
 
+【区别】为什么要专门说一下区别，因为这个跟构造函数模式太像了。但是构造函数是直接造一个对象，且对象为this，而寄生构造模式是自己内部新建一个对象（实际上做了new关键字做的事）。外部再new它其实只是为了挂constructor在实例上面而已。
+
+【特点】`说不上优点还是缺点，只能说是特点`：寄生构造生产的实例，跟这个构造函数本身是没什么关联的，除了名义上是它的实例之外，其余那些属性和方法都是自己在内部生成和挂载的，跟我们声明和调用那个构造函数（和其原型也）没什么关系。
+
+【实例】
+```javascript
+function Person (name, age, gender) {
+  let o = new Object()
+  o.name = name
+  o.age = age
+  o.gender = gender
+  return o // return 的是自己内部new的实例，外面new操作符给的this，没用到。
+}
+
+let person1 = new Person('Tom', 16, 'male')
+```
 
 ## 七、稳妥构造函数模式
+稳妥构造模式在寄生构造模式的基础上，创建实例的时候去掉了new操作符。
+
+【特点】没有公共属性，方法内部不引用this对象。适合在安全的环境中（禁用this和new）
+
+【实例】
+```javascript
+function Person (name, age, gender) {
+  var o = new Object()
+  o.name = name
+  o.age = age
+  o.gender = gender
+
+  o.sayHi = function () {
+    console.log(name) // 【特点】没有使用this引用值
+  }
+  return o
+}
+
+let person1 = Person('tom', 18, 'male') // 【特点】不使用new
+```
