@@ -17,7 +17,7 @@ tags: [javascript]
 
 ## 一、原型链继承
 
-通过将子类的构造函数原型指向父类的实例，来达到继承的目的。
+【定义】通过将子类的构造函数原型指向父类的实例，来达到继承的目的。
 
 【缺点】
 
@@ -51,9 +51,9 @@ var instance = new SubType()
 instance.getSuperValue() // true
 ```
 
-## 借用构造函数继承
+## 二、借用构造函数继承
 
-定义：在子类构造函数的内部调用超类型构造函数。
+【定义】在子类构造函数的内部调用超类型构造函数。
 
 【缺点】
 
@@ -65,6 +65,10 @@ instance.getSuperValue() // true
 ```javascript
 function SuperType() {
   this.color = ['red', 'blue', 'green']
+  // 【缺点】方法们必须写在构造函数里面
+  this.sayColor = function () {
+    alert(this.color)
+  }
 }
 
 function SubType(params) {
@@ -80,4 +84,67 @@ instance1.color.push('black') // ['red', 'blue', 'green', 'black']
 var instance2 = new SubType(params)
 
 instance2.color // ['red', 'blue', 'green']
+```
+
+## 三、组合继承/伪经典继承
+
+【定义】组合继承，也叫伪经典继承。通过将借用构造函数和原型链两者的技术（优点）组合在一起，用原型链处理属性+方法，用借用构造函数的方法去实现对实例属性的继承。
+
+【优点】
+1. 用原型链实现对原型属性和方法的继承
+2. 通过借用构造函数实现对实例属性的继承
+
+【缺点】要执行2次超类的构造函数，一次是在构造函数里面，另一次是要生成被子类继承的实力的时候。
+
+【实例】
+```javascript
+function SuperType (name) {
+  this.name = name
+  this.color = ['red', 'blue', 'black'],
+}
+SuperType.prototype.sayName = function () {
+  return this.name
+}
+
+function SubType (name, age) {
+  // 借用构造函数，对name属性的继承独立挂载
+  SuperType.call(this, name)
+  this.age = age
+}
+// 指向原型，建造原型链关系
+SubType.prototype = new SuperType()
+// 重新指定构造函数
+SubType.prototype.constructor = SubType
+// 重写sayName方法
+SubType.prototpye.sayAge = function () {
+  alert(this.age)
+}
+
+let instance1 = new SubType('Tome', 29)
+instance1.color.push('yellow')
+alert(instance1.color) // ['red', 'blue', 'black', 'yellow']
+instance1.sayName() // Tom
+instance1.sayAge() // 29
+
+let instance2 = new SubType('Mary', 19)
+instance2.color // ['red', 'blue', 'black']
+instance2.sayName() // Mary
+instance2.sayAge() // 19
+```
+
+## 四、原型式继承
+
+【定义】原型可以基于已有的对象创建新的对象。创建一个空的方法，然后将要继承的实例给予空的方法，再用新的方法创建新的实例，就完成了对超类的继承。
+
+【优点】不用创建一个超类的实例去给子类继承。
+
+【缺点】跟原型链继承一样，实际上原型式继承就等于原型链继承的一个马甲。
+
+```javascript
+function Object (o) {
+  // o 可以是一个实例或者一个原型，o被所有Object方法创建的饭实例所共享。
+  function F(){}
+  F.prototype = o
+  return new F ()
+}
 ```
