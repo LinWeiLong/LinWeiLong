@@ -66,7 +66,7 @@ instance.getSuperValue() // true
 function SuperType() {
   this.color = ['red', 'blue', 'green']
   // 【缺点】方法们必须写在构造函数里面
-  this.sayColor = function () {
+  this.sayColor = function() {
     alert(this.color)
   }
 }
@@ -91,12 +91,14 @@ instance2.color // ['red', 'blue', 'green']
 【定义】组合继承，也叫伪经典继承。通过将借用构造函数和原型链两者的技术（优点）组合在一起，用原型链处理属性+方法，用借用构造函数的方法去实现对实例属性的继承。
 
 【优点】
+
 1. 用原型链实现对原型属性和方法的继承
 2. 通过借用构造函数实现对实例属性的继承
 
-【缺点】要执行2次超类的构造函数，一次是在构造函数里面，另一次是要生成被子类继承的实力的时候。
+【缺点】要执行 2 次超类的构造函数，一次是在构造函数里面，另一次是要生成被子类继承的实力的时候。
 
 【实例】
+
 ```javascript
 function SuperType (name) {
   this.name = name
@@ -141,10 +143,34 @@ instance2.sayAge() // 19
 【缺点】跟原型链继承一样，实际上原型式继承就等于原型链继承的一个马甲。
 
 ```javascript
-function Object (o) {
+function Object(o) {
   // o 可以是一个实例或者一个原型，o被所有Object方法创建的饭实例所共享。
-  function F(){}
+  function F() {}
   F.prototype = o
-  return new F ()
+  return new F()
 }
+```
+
+## 五、寄生式继承
+
+【定义】在一个方法内部，借用另一个方法去复制原有的对象，然后对克隆体进行赋值，最后返回克隆体。
+
+【特点】产生的克隆体跟构造函数没什么关系，克隆体是通过内部的方法复制出来的，原型链指向的是本体的原型。
+
+```javascript
+function createAnother(origin) {
+  var clone = object(origin)
+  clone.sayHi = function() {
+    console.log(this.name)
+  }
+  return clone
+}
+
+var person = {
+  name: 'tom',
+  age: 18
+}
+
+var anotherPerson = createAnother(person)
+anotherPerson.sayHi() // tom
 ```
