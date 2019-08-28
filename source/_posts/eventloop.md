@@ -112,3 +112,8 @@ console.log(3);
 图示：
 
 ![任务流程](http://ww2.sinaimg.cn/large/006y8mN6gy1g6ftkm4jztj30at0gpmxk.jpg)
+
+
+# 参考文章
+[从多线程到Event Loop全面梳理](https://juejin.im/post/5d5b4c2df265da03dd3d73e5)
+[JS(浏览器)事件环 (宏、微任务)](https://juejin.im/post/5d552275e51d456201486e24)
