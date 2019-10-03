@@ -120,7 +120,7 @@
 
 
 
-  <title>微信返回Vue SPA不刷新页面的问题记录 | Willong's Blog</title>
+  <title>http协议的缓存 | Willong's Blog</title>
   
 
 
@@ -247,7 +247,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/wechat-backword-refresh/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/03/http-cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Willong lin">
@@ -264,7 +264,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">微信返回Vue SPA不刷新页面的问题记录</h1>
+          <h1 class="post-title" itemprop="name headline">http协议的缓存</h1>
         
 
         <div class="post-meta">
@@ -276,7 +276,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-07T18:23:40+08:00">2019-07-07</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-03T11:52:48+08:00">2019-10-03</time>
             
 
             
@@ -312,31 +312,66 @@
       
 
       
-        <h1 id="问题表现"><a href="#问题表现" class="headerlink" title="问题表现"></a>问题表现</h1><p>在微信内，打开SAP的页面SPA-a，从SPA-a打开外部页面B，从B再返回SPA-a的话，SPA-a页面会呈现Vue数据绑定特征失效的症状，比如load完接口，loading窗口不会根据v-show变化而消失，点击路由跳转SPA，页面也没有出现变化，但实际上路由的hash已经变化了，但是页面内容没有跟着变化。</p>
-<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>本来只是以为是页面loading窗口没有隐藏之类的问题，对loading的值进行核对，观察v-show绑定的值是否有变化，实际上，是有对store里面的loadingSHOW进行赋值的，但template没有变化或者没有进行重新render。</p>
-<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><blockquote>
-<p><strong>浏览器前进/后退缓存</strong></p>
-<p>这里提到一个概念，浏览器前进/后退缓存(Backward/Forward Cache, BF Cache)，当然也有人叫 disk Cache。<br>BF Cache 是一种浏览器优化， HTML 标准并未指定其如何进行缓存，因此缓存行为是各浏览器各自实现，所以不尽相同。<br>由于不是 HTTP 缓存，所以通过头文件缓存设置 no-cache 是无效的。当然也不能以 HTTP 缓存机制来理解 BF Cache。</p>
-<p>作者：Sakura同志<br>链接：<a href="https://juejin.im/post/5caf3462e51d456e7e297b9e" target="_blank" rel="noopener">https://juejin.im/post/5caf3462e51d456e7e297b9e</a><br>来源：掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-</blockquote>
-<p>形成这样的根本原因是微信对于其内置的浏览器进行的“优化”，在iOS下返回SPA-a的时候，微信不会重新请求任何HTML/JS/CSS静态资源，只会把JS重新执行一遍。</p>
-<p>但是按照我的个人理解，JS重新执行一遍，应该也能够形成一样的执行效果才对。实际上的vue整个的生命周期也确实有重新执行，但就是已经失去了双向数据绑定的响应了。</p>
-<p>但实际上表现和期望的不一致，可能是我的理解有偏差。</p>
-<h1 id="问题调试过程"><a href="#问题调试过程" class="headerlink" title="问题调试过程"></a>问题调试过程</h1><ol>
-<li>尝试一：一开始的思路是着重于在返回SPA-a的时候，尝试去刷新SPA-a。由于sessionStorage会计算路由的历史记录count的计数，以此为判断当count等于1（为什么等于1，有另外原因，不在此细说）的时候，尝试使用location.reload()去刷新页面。<ol>
-<li>结果，失败，reaload也没有重新加载页面。</li>
+        <p>之前一次面试被问到这方面的问题，对这方面进行了一次整理。废话不多说，直接列大纲。</p>
+<ol>
+<li>前提：HTTP结构</li>
+<li>缓存规则</li>
+<li>缓存类型</li>
+<li>强制缓存</li>
+<li>对比缓存</li>
+</ol>
+<h1 id="前提：HTTP结构"><a href="#前提：HTTP结构" class="headerlink" title="前提：HTTP结构"></a>前提：HTTP结构</h1><p>HTTP请求，由请求头和请求体部分，请求体就是请求返回的我们要用的东西，请求头就是一些类似于配置的信息。</p>
+<h1 id="缓存规则-流程"><a href="#缓存规则-流程" class="headerlink" title="缓存规则/流程"></a>缓存规则/流程</h1><p>浏览器内部有一个管理缓存的地方和对应的流程和规则，先按照网上的说法定义为浏览器的缓存数据库。</p>
+<p>初次请求的时候，查询数据库，数据库返回没有数据，浏览器发起请求给浏览器，浏览器返回数据，将数据和缓存规则写入缓存系统<br><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7l4q33x3xj30b7091gm6.jpg" alt="初次请求"></p>
+<p>下面是查询缓存数据库的时候发现强缓存规则时调用的规则和没有命中强缓存规则的流程。<br><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7l4tgga10j30o1098q42.jpg" alt="强缓存规则"></p>
+<p>下面是查询缓存数据库的时候发现对比缓存规则时调用的规则和没有命中强缓存规则的流程。<br><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7l4xt1egtj30qb09g75u.jpg" alt="对比缓存规则"></p>
+<ol>
+<li>发起请求，查询缓存仓库<ol>
+<li>有缓存，查询是否过期</li>
+<li>没有缓存，发起请求，</li>
 </ol>
 </li>
-<li>尝试二：由于SPA-a是之前相同业务的迁移，而之前业务并没有出现过这样的情况。通过对比，猜测是由于之前业务是使用动态引入路由页面的，所以对SPA-a的项目进行了相同改造。<ol>
-<li>结果，成功。</li>
+<li>查询缓存是否过期<ol>
+<li>没过期，走强制缓存路线</li>
+<li>已经过期，查Etag</li>
+</ol>
+</li>
+<li>Etag是否匹配<ol>
+<li>过期了</li>
 </ol>
 </li>
 </ol>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><ol>
-<li>微信会对之前访问过的页面进行 前进/后退缓存(disk cache)，返回被缓存的页面不会执行静态资源的请求，只会重新执行JS。</li>
-<li>vue SPA在被disk cache之后，返回SPA，不会具备双向绑定的特性。</li>
-<li>第二点可以用异步引入路由组件解决。</li>
-</ol>
+<h1 id="缓存类型："><a href="#缓存类型：" class="headerlink" title="缓存类型："></a>缓存类型：</h1><ul>
+<li>强制缓存<ul>
+<li>cache-control</li>
+<li>expires</li>
+</ul>
+</li>
+<li>对比缓存<ul>
+<li>last-Modified/If-Modified-Since</li>
+<li>Etag/if-None-Match</li>
+</ul>
+</li>
+</ul>
+<h1 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h1><p>强制缓存通过http请求的header部分标识，分别是Expires字段和Cache-control字段，下面来介绍一下这两者的作用。</p>
+<h2 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h2><p>Expires标识服务端返回的到期时间，在这个到期时间之前，资源都可以使用缓存，不用再问服务端索取。</p>
+<p>Expires属性属于HTTP1.0的属性，现在浏览器默认都是HTTP1.1版本的协议，所以作用基本上已经可以忽略不计。</p>
+<p>另外就是Expires的时间是服务器时间，如果客户端的时间跟服务端时间不同步，那么Expires基本上就跪了。比如我把电脑上的时间设置成10年后，那么无论我发送什么请求，都是缓存不了的，因为在我的客户端看来所有资源都是过期的。</p>
+<h2 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h2><p>Cache-Control是强制缓存当前最常用的属性。上面说到Expires的服务器时间引起的过期问题，那就是说绝对时间不行，所以Cache-Control就改进了这一点，使用了相对时间。</p>
+<p>Cache-Control的属性：</p>
+<ul>
+<li>private：客户端可以缓存</li>
+<li>public：客户端和代理服务器都可以缓存</li>
+<li>max-age=xxx：资源在xxx秒后失效</li>
+<li>no-cache：使用<em>对比缓存</em>来验证缓存数据</li>
+<li>no-store：所有内容都不进行任何形式的缓存</li>
+</ul>
+<h1 id="对比缓存"><a href="#对比缓存" class="headerlink" title="对比缓存"></a>对比缓存</h1><p>什么是对比缓存：需要进行比较判断是否可以使用缓存。通俗地说，就是问下服务器，我能不能使用我本地的这一份缓存，如果可以就返回个304，不行就返回个200.</p>
+<p>那问题来了，怎么去做这个问一下服务器的事情呢？主要就是依赖 Last-Modified/If-Modified-Since，E-tag/if-None-Match，这两块属性。</p>
+<h2 id="Last-Modified-If-Modified-Since"><a href="#Last-Modified-If-Modified-Since" class="headerlink" title="Last-Modified/If-Modified-Since"></a>Last-Modified/If-Modified-Since</h2><p>Last-Modified(返回)：是服务器告诉浏览器，这个资源最后的修改时间。下次浏览器请求同一个资源的时候，会将这个资源的Last-Modified用If-Modified-Since的字段告诉服务器，服务器通过对比这个资源的最后修改时间，如果还是在Last-Modified的那个时间，那么就返回304告诉浏览器使用缓存。</p>
+<p>If-Modified-Since（带过去）：告诉服务器，服务器返回的资源最后的修改时间。</p>
+<h2 id="E-tag-If-None-Match"><a href="#E-tag-If-None-Match" class="headerlink" title="E-tag/If-None-Match"></a>E-tag/If-None-Match</h2><p>E-tag（返回）：服务器响应的时候，告诉浏览器在副武器的唯一标识，标识的生成规则由服务器决定。</p>
+<p>If-None-Match（带过去）：请求服务器时，以If-None-Match将E-tag的内容带过去。服务器收到If-None-Match的字段之后，对服务器资源进行标识比对，如果没有匹配的话，则返回200，有匹配的话就返回304.</p>
 
       
     </div>
@@ -354,9 +389,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/技巧指南/" rel="tag"># 技巧指南</a>
+            <a href="/tags/http/" rel="tag"># http</a>
           
-            <a href="/tags/微信/" rel="tag"># 微信</a>
+            <a href="/tags/缓存/" rel="tag"># 缓存</a>
           
         </div>
       
@@ -369,8 +404,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/25/git-submodule-usege/" rel="next" title="Git submodule使用指南">
-                <i class="fa fa-chevron-left"></i> Git submodule使用指南
+              <a href="/2019/08/28/how-vue-work/" rel="next" title="how-vue-work">
+                <i class="fa fa-chevron-left"></i> how-vue-work
               </a>
             
           </div>
@@ -378,10 +413,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/09/use-charles-proxy/" rel="prev" title="使用Charles进行抓包调试以及注意事项">
-                使用Charles进行抓包调试以及注意事项 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -504,7 +535,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题表现"><span class="nav-number">1.</span> <span class="nav-text">问题表现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题分析"><span class="nav-number">2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题总结"><span class="nav-number">3.</span> <span class="nav-text">问题总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题调试过程"><span class="nav-number">4.</span> <span class="nav-text">问题调试过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">5.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提：HTTP结构"><span class="nav-number">1.</span> <span class="nav-text">前提：HTTP结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存规则-流程"><span class="nav-number">2.</span> <span class="nav-text">缓存规则/流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存类型："><span class="nav-number">3.</span> <span class="nav-text">缓存类型：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强制缓存"><span class="nav-number">4.</span> <span class="nav-text">强制缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Expires"><span class="nav-number">4.1.</span> <span class="nav-text">Expires</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Control"><span class="nav-number">4.2.</span> <span class="nav-text">Cache-Control</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对比缓存"><span class="nav-number">5.</span> <span class="nav-text">对比缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Last-Modified-If-Modified-Since"><span class="nav-number">5.1.</span> <span class="nav-text">Last-Modified/If-Modified-Since</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#E-tag-If-None-Match"><span class="nav-number">5.2.</span> <span class="nav-text">E-tag/If-None-Match</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -4,6 +4,40 @@
   
     
     <entry>
+      <title>http协议的缓存</title>
+      <link href="/2019/10/03/http-cache/"/>
+      <url>/2019/10/03/http-cache/</url>
+      
+        <content type="html"><![CDATA[<p>之前一次面试被问到这方面的问题，对这方面进行了一次整理。废话不多说，直接列大纲。</p><ol><li>前提：HTTP结构</li><li>缓存规则</li><li>缓存类型</li><li>强制缓存</li><li>对比缓存</li></ol><h1 id="前提：HTTP结构"><a href="#前提：HTTP结构" class="headerlink" title="前提：HTTP结构"></a>前提：HTTP结构</h1><p>HTTP请求，由请求头和请求体部分，请求体就是请求返回的我们要用的东西，请求头就是一些类似于配置的信息。</p><h1 id="缓存规则-流程"><a href="#缓存规则-流程" class="headerlink" title="缓存规则/流程"></a>缓存规则/流程</h1><p>浏览器内部有一个管理缓存的地方和对应的流程和规则，先按照网上的说法定义为浏览器的缓存数据库。</p><p>初次请求的时候，查询数据库，数据库返回没有数据，浏览器发起请求给浏览器，浏览器返回数据，将数据和缓存规则写入缓存系统<br><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7l4q33x3xj30b7091gm6.jpg" alt="初次请求"></p><p>下面是查询缓存数据库的时候发现强缓存规则时调用的规则和没有命中强缓存规则的流程。<br><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7l4tgga10j30o1098q42.jpg" alt="强缓存规则"></p><p>下面是查询缓存数据库的时候发现对比缓存规则时调用的规则和没有命中强缓存规则的流程。<br><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7l4xt1egtj30qb09g75u.jpg" alt="对比缓存规则"></p><ol><li>发起请求，查询缓存仓库<ol><li>有缓存，查询是否过期</li><li>没有缓存，发起请求，</li></ol></li><li>查询缓存是否过期<ol><li>没过期，走强制缓存路线</li><li>已经过期，查Etag</li></ol></li><li>Etag是否匹配<ol><li>过期了</li></ol></li></ol><h1 id="缓存类型："><a href="#缓存类型：" class="headerlink" title="缓存类型："></a>缓存类型：</h1><ul><li>强制缓存<ul><li>cache-control</li><li>expires</li></ul></li><li>对比缓存<ul><li>last-Modified/If-Modified-Since</li><li>Etag/if-None-Match</li></ul></li></ul><h1 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h1><p>强制缓存通过http请求的header部分标识，分别是Expires字段和Cache-control字段，下面来介绍一下这两者的作用。</p><h2 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h2><p>Expires标识服务端返回的到期时间，在这个到期时间之前，资源都可以使用缓存，不用再问服务端索取。</p><p>Expires属性属于HTTP1.0的属性，现在浏览器默认都是HTTP1.1版本的协议，所以作用基本上已经可以忽略不计。</p><p>另外就是Expires的时间是服务器时间，如果客户端的时间跟服务端时间不同步，那么Expires基本上就跪了。比如我把电脑上的时间设置成10年后，那么无论我发送什么请求，都是缓存不了的，因为在我的客户端看来所有资源都是过期的。</p><h2 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h2><p>Cache-Control是强制缓存当前最常用的属性。上面说到Expires的服务器时间引起的过期问题，那就是说绝对时间不行，所以Cache-Control就改进了这一点，使用了相对时间。</p><p>Cache-Control的属性：</p><ul><li>private：客户端可以缓存</li><li>public：客户端和代理服务器都可以缓存</li><li>max-age=xxx：资源在xxx秒后失效</li><li>no-cache：使用<em>对比缓存</em>来验证缓存数据</li><li>no-store：所有内容都不进行任何形式的缓存</li></ul><h1 id="对比缓存"><a href="#对比缓存" class="headerlink" title="对比缓存"></a>对比缓存</h1><p>什么是对比缓存：需要进行比较判断是否可以使用缓存。通俗地说，就是问下服务器，我能不能使用我本地的这一份缓存，如果可以就返回个304，不行就返回个200.</p><p>那问题来了，怎么去做这个问一下服务器的事情呢？主要就是依赖 Last-Modified/If-Modified-Since，E-tag/if-None-Match，这两块属性。</p><h2 id="Last-Modified-If-Modified-Since"><a href="#Last-Modified-If-Modified-Since" class="headerlink" title="Last-Modified/If-Modified-Since"></a>Last-Modified/If-Modified-Since</h2><p>Last-Modified(返回)：是服务器告诉浏览器，这个资源最后的修改时间。下次浏览器请求同一个资源的时候，会将这个资源的Last-Modified用If-Modified-Since的字段告诉服务器，服务器通过对比这个资源的最后修改时间，如果还是在Last-Modified的那个时间，那么就返回304告诉浏览器使用缓存。</p><p>If-Modified-Since（带过去）：告诉服务器，服务器返回的资源最后的修改时间。</p><h2 id="E-tag-If-None-Match"><a href="#E-tag-If-None-Match" class="headerlink" title="E-tag/If-None-Match"></a>E-tag/If-None-Match</h2><p>E-tag（返回）：服务器响应的时候，告诉浏览器在副武器的唯一标识，标识的生成规则由服务器决定。</p><p>If-None-Match（带过去）：请求服务器时，以If-None-Match将E-tag的内容带过去。服务器收到If-None-Match的字段之后，对服务器资源进行标识比对，如果没有匹配的话，则返回200，有匹配的话就返回304.</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> http </tag>
+            
+            <tag> 缓存 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>how-vue-work</title>
+      <link href="/2019/08/28/how-vue-work/"/>
+      <url>/2019/08/28/how-vue-work/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JS中的setTimeout和promise是怎么回事？详解event loop机制</title>
       <link href="/2019/08/28/eventloop/"/>
       <url>/2019/08/28/eventloop/</url>
