@@ -251,7 +251,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/algorithm-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Willong lin">
@@ -270,7 +270,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/10/algorithm-1/" itemprop="url">算法学习之题目记录</a></h1>
+                <a class="post-title-link" href="/2019/10/10/algorithm/" itemprop="url">算法学习之题目记录</a></h1>
         
 
         <div class="post-meta">
@@ -322,6 +322,7 @@
           
             <h1 id="开坑声明"><a href="#开坑声明" class="headerlink" title="开坑声明"></a>开坑声明</h1><p>之前买了极客时间的一个《算法面试通关40讲》的课程，里面有提到的题目，打算以笔记的形式记录下来，一个题目的思考分析过程和自己的实现结果。</p>
 <p>废话不多说，马上开始。</p>
+<hr>
 <h1 id="第一题：链表反转"><a href="#第一题：链表反转" class="headerlink" title="第一题：链表反转"></a>第一题：链表反转</h1><p>题目描述：反转一个<strong>有序</strong>单链表。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</span><br></pre></td></tr></table></figure>
 
@@ -342,6 +343,11 @@
 <p>实际上我自己写的时候，是有问题的，没有用到prev这个临时变量去存储上一个的指针，自以为JS的引用类型，直接将cur和nextNode的next递归去修改，也没想着利用最后一个节点必然是null的情况去去占位prev。</p>
 <p>下面是我在力扣上提交的代码，还有改进的空间。现在用的是while写的，还可以用递归去写一个版本，看下这周有没有时间去做。</p>
 <h2 id="我的代码"><a href="#我的代码" class="headerlink" title="我的代码"></a>我的代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初次成功版</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.next = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;ListNode&#125; head</span></span><br><span class="line"><span class="comment"> * @return &#123;ListNode&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"> reverseList = <span class="function"><span class="keyword">function</span>(<span class="params">head</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// if(head.next === null) &#123;</span></span><br><span class="line">    <span class="comment">//     // handle too short</span></span><br><span class="line">    <span class="comment">//     return head</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> prev = <span class="literal">null</span>,</span><br><span class="line">        cur = head,</span><br><span class="line">        nextNum,</span><br><span class="line">        temp</span><br><span class="line">    <span class="keyword">while</span>(cur) &#123;</span><br><span class="line">        nextNum = cur.next</span><br><span class="line">        cur.next = prev</span><br><span class="line">        prev = cur</span><br><span class="line">        cur = nextNum</span><br><span class="line">        nextNum = nextNum? nextNum.next: <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> prev</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">reverseList()</span><br></pre></td></tr></table></figure>
+
+<center>第一题到此结束</center>
+
+<hr>
+
           
         
       
