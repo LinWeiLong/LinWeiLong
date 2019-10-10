@@ -75,14 +75,17 @@
 
 
 
+<meta name="description" content="我是谁">
 <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="http://yoursite.com/about/index.html">
 <meta property="og:site_name" content="Willong&#39;s Blog">
+<meta property="og:description" content="我是谁">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-25T16:03:52.438Z">
+<meta property="og:updated_time" content="2019-10-09T15:48:19.519Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
+<meta name="twitter:title" content="关于我">
+<meta name="twitter:description" content="我是谁">
 
 
 
@@ -114,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/">
+  <link rel="canonical" href="http://yoursite.com/about/">
 
 
 
 
 
-  <title>Hello World | Willong's Blog</title>
+  <title>从前端角度学Docker | Willong's Blog</title>
   
 
 
@@ -247,7 +250,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/24/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/08/what-is-docker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Willong lin">
@@ -264,7 +267,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">从前端角度学Docker</h1>
         
 
         <div class="post-meta">
@@ -276,7 +279,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-24T15:19:47+08:00">2019-06-24</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-08T17:11:06+08:00">2019-10-08</time>
             
 
             
@@ -312,20 +315,29 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+        <h1 id="一、什么是Docker？"><a href="#一、什么是Docker？" class="headerlink" title="一、什么是Docker？"></a>一、什么是Docker？</h1><h2 id="1-1-Docker这件事的前世今生-Docker解决了什么问题-？"><a href="#1-1-Docker这件事的前世今生-Docker解决了什么问题-？" class="headerlink" title="1.1 Docker这件事的前世今生 / Docker解决了什么问题 ？"></a>1.1 Docker这件事的前世今生 / Docker解决了什么问题 ？</h2><p>要搞清楚Docker是什么东西，最简单的切入点，就是了解他解决了什么问题，如果一个东西没有解决任何问题，那么我们肯定没有理解和学习它的必要。那么Docker现在这么火，倒推过来，就表示Docker解决了很多人的痛点！</p>
+<p><em>那么Docker解决了什么痛点呢？</em></p>
+<p>就是软件开发当中的环境配置问题，学习软件开发的第一节课，可能都是如何配置XXX语言的运行环境，XXX框架的开发环境。这还是开发阶段的，以前在开发阶段没问题，去到部署的时候可能有问题，这种就是开发机和线上机的环境不一致造成的。为了维持软件运行环境所安装的软件依赖的一致性，给开发人员造成了很大的工作量。后来开发人员就希望要是能够保持环境的依赖一直一样就好了。于是出现了第一代方案：</p>
+<h3 id="1-1-1-虚拟机"><a href="#1-1-1-虚拟机" class="headerlink" title="1.1.1 虚拟机"></a>1.1.1 虚拟机</h3><p>虚拟机，就是在一台机器上再将资源分配划分为另一台机器。虚拟机以文件的形式存在于底层（物理）机器的操作系统上。虽然虚拟机可以通过以文件的形式承载一整个操作系统，也就解决了环境依赖的问题，但是虚拟机也有很大的缺点，就是：</p>
+<ol>
+<li>占资源多</li>
+<li>冗余步骤多，因为每次部署虚拟机都需要搞一次操作系统</li>
+<li>启动慢</li>
+</ol>
+<p>为了某个软件使用虚拟机方案，其实里面的系统就是这个方案的”副作用“。那么，能不能没有系统这一层副作用呢？答案是有的，就是Linux容器技术。</p>
+<h3 id="1-1-2-Linux容器"><a href="#1-1-2-Linux容器" class="headerlink" title="1.1.2 Linux容器"></a>1.1.2 Linux容器</h3><p>Linux容器（Linux Containers， AKA LXC）。<br>Linux容器不模拟一个完整的操作系统，只是对进程进行隔离。在容器里的进程，接触的系统资源都是被虚拟处理过的，类似做了一层物理资源的保护层，进行隔离。这样的操作是进程级别，相比虚拟机具备了其不具备的优点：</p>
+<ol>
+<li>资源占用少</li>
+<li>启动快</li>
+<li>体积小</li>
+</ol>
+<p>容器相当于进程级别的虚拟机，同样对系统资源进行虚拟化，但是没了操作系统这个拖油瓶，速度快了很多。</p>
+<h3 id="1-2-Docker是什么？"><a href="#1-2-Docker是什么？" class="headerlink" title="1.2 Docker是什么？"></a>1.2 Docker是什么？</h3><p>Docker是基于Linux容器的一种封装，提供简单易用的容器使用接口。是目前最流行的Linux容器解决方案。</p>
+<blockquote>
+<p>Docker 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 Docker，就不用担心环境问题。</p>
+<p>总体来说，Docker 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</p>
+</blockquote>
+<h1 id="二、为什么要学习Docker？"><a href="#二、为什么要学习Docker？" class="headerlink" title="二、为什么要学习Docker？"></a>二、为什么要学习Docker？</h1>
       
     </div>
     
@@ -340,6 +352,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/工程化/" rel="tag"># 工程化</a>
+          
+        </div>
+      
 
       
       
@@ -349,14 +367,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/10/03/http-cache/" rel="next" title="http协议的缓存">
+                <i class="fa fa-chevron-left"></i> http协议的缓存
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/25/git-submodule-usege/" rel="prev" title="Git submodule使用指南">
-                Git submodule使用指南 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/10/10/algorithm-1/" rel="prev" title="算法学习之题目记录">
+                算法学习之题目记录 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -434,7 +456,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -447,7 +469,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -480,7 +502,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、什么是Docker？"><span class="nav-number">1.</span> <span class="nav-text">一、什么是Docker？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Docker这件事的前世今生-Docker解决了什么问题-？"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Docker这件事的前世今生 / Docker解决了什么问题 ？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-虚拟机"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-Linux容器"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 Linux容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Docker是什么？"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.2 Docker是什么？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、为什么要学习Docker？"><span class="nav-number">2.</span> <span class="nav-text">二、为什么要学习Docker？</span></a></li></ol></div>
             
 
           </div>
