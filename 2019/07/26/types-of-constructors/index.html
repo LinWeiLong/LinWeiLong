@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="我是谁">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta property="og:site_name" content="Willong&#39;s Blog">
+<meta property="og:description" content="我是谁">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-09T15:48:19.519Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于我">
+<meta name="twitter:description" content="我是谁">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/about/">
+
+
+
+
+
+  <title>构造函数的发展和种类 | Willong's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Willong's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/types-of-constructors/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Willong lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Willong's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">构造函数的发展和种类</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-26T23:51:48+08:00">2019-07-26</time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在重新翻阅《Javascript 高级程序设计》，读到了构造函数的种类的发展历程，发现自己之前只是有一个模糊的认识，停留在会用，或者知道怎么用，但是不知道个中原因或者发展历程，没有形成体系化的知识结构，现在借此机会来梳理一下。</p>
+<h1 id="创建对象的方法（构造函数种类）"><a href="#创建对象的方法（构造函数种类）" class="headerlink" title="创建对象的方法（构造函数种类）"></a>创建对象的方法（构造函数种类）</h1><ol>
+<li>工厂模式</li>
+<li>构造函数模式</li>
+<li>原型模式</li>
+<li>组合模式：构造函数+原型模式</li>
+<li>动态原型</li>
+<li>寄生构造函数模式</li>
+<li>稳妥构造函数模式</li>
+</ol>
+<h2 id="一、工厂模式"><a href="#一、工厂模式" class="headerlink" title="一、工厂模式"></a>一、工厂模式</h2><p>工厂模式就是很简单的一个function里面生成一个对象，给对象赋予属性和方法之后return出来。</p>
+<p>【缺点】生成的对象难以识别是什么类型。也就是说生成出来的东西不知道是什么class。</p>
+<p>【示例】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPersion</span>(<span class="params">name, age, gender</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> person = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">  person.name = name</span><br><span class="line">  person.age = age</span><br><span class="line">  person.gender = gender</span><br><span class="line">  person.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Hi, my name is <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> person</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、构造函数模式"><a href="#二、构造函数模式" class="headerlink" title="二、构造函数模式"></a>二、构造函数模式</h2><p>为了解决工厂模式的缺点，诞生了构造函数模式。</p>
+<p>【原理】由于在JS的世界中，任何function在new操作符操作下，都会成为构造函数，用以创建特定类型的对象。构造函数中如果没有return语句，就会将构造函数的this（运行环境）return出来，如果有return语句的话，则是以return语句返回的内容为准。</p>
+<p>new 操作符做了什么？</p>
+<ol>
+<li>创建一个新对象</li>
+<li>将构造函数的作用域赋给新对象</li>
+<li>执行构造函数的代码</li>
+<li>return新对象</li>
+</ol>
+<p>其实感觉就是将构造函数做的事情，包裹在new操作符里面做了。</p>
+<hr>
+<p>【优点】</p>
+<ol>
+<li>方法内部无需显式创建对象</li>
+<li>直接将方法和属性赋值给this</li>
+<li>没有return</li>
+<li>可以通过实例的（ constructor属性 || isntanceof方法better ）来判断对象类型<ol>
+<li>通过instanceof方法，判断只要是实例中包含的继承过的类的都算true</li>
+</ol>
+</li>
+</ol>
+<p>【缺点】构造函数中的方法，会重复生成，每生成一个实例都会生成一堆对应的方法，而且互不相等。在下面的例子中，Tom和Li Lei都有sayHi方法，虽然做的都是一样的事情，但是都各自生成了一个。会造成浪费。</p>
+<p>缺点的丑陋解决办法，将方法都挂在共享的作用域下，去读取，但是没有形成封装性。详见示例2。</p>
+<p>【示例】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name, age, gender</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.age = age</span><br><span class="line">  <span class="keyword">this</span>.gender = gender</span><br><span class="line">  <span class="keyword">this</span>.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Hi, my name is <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person1 = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>, <span class="number">16</span>, <span class="string">'male'</span>)</span><br><span class="line"><span class="keyword">let</span> person2 = <span class="keyword">new</span> Person(<span class="string">'Li Lei'</span>, <span class="number">18</span>, <span class="string">'male'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person1.sayHi === persion2.sayHi) <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样执行的话Mary等属性会在window下，因为Person执行的时候this在window上</span></span><br><span class="line">Person(<span class="string">'mary'</span>, <span class="number">26</span>, <span class="string">'female'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>【示例2】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 【缺点】的丑陋解决办法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHi</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Hi, my name is <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name, age, gender</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.age = age</span><br><span class="line">  <span class="keyword">this</span>.gender = gender</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用挂在全局的共享方法，但是方法一多怎么办？</span></span><br><span class="line">  <span class="keyword">this</span>.sayHi = sayHi</span><br><span class="line">  <span class="keyword">this</span>.sayHi2 = sayHi2</span><br><span class="line">  <span class="keyword">this</span>.sayHi3 = sayHi3</span><br><span class="line">  <span class="comment">// ....无穷无尽，代码也丑陋......</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、原型继承"><a href="#三、原型继承" class="headerlink" title="三、原型继承"></a>三、原型继承</h2><p>【原理】原型继承的思想就是将属性和方法都挂载在构造函数的prototype对象上，这个对象的作用就是包含这个构造函数的类型的所有共享属性和方法。其实名字叫“原型”已经挺好理解了，就是所有实例的一个母版，原型上有的，实例都有。</p>
+<p><em>了解原型继承需要对原型和原型链有所了解，这个段落不做介绍，日后写一个文章专门说明。</em></p>
+<p>【优点】封装在一起，可读性比较好，方法都可以共用。能设置默认值（书中认为是一个缺点，看各人理解吧）。</p>
+<p>【缺点】prototype上挂载的属性或者方法，是所有实例所共享的。一旦其中示例中的一个引用类型被进行了修改，那么所有其他实例中的值也会被改动到（引用类型都是指针）。</p>
+<p>【实例】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">Person.prototype.name = <span class="string">'Tom'</span></span><br><span class="line">Person.prototype.age = <span class="number">18</span></span><br><span class="line">Person.prototype.gender = <span class="string">'male'</span></span><br><span class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person1 = <span class="keyword">new</span> Person()</span><br><span class="line"><span class="built_in">console</span>.log(person1.name) <span class="comment">// 'Tom'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、组合模式：构造函数-原型模式"><a href="#四、组合模式：构造函数-原型模式" class="headerlink" title="四、组合模式：构造函数+原型模式"></a>四、组合模式：构造函数+原型模式</h2><p>组合继承很好理解，就是取构造函数模式和原型模式的优点作为类的一个构造模式，由于取了两种模式的优点，所以叫组合继承。</p>
+<ul>
+<li>属性，由构造函数模式处理。</li>
+<li>方法，由原型模式处理。</li>
+</ul>
+<p>【优点】封装化（从前端角度看）。属性独立，方法公用。</p>
+<p>【缺点】属性和方法分开声明，不是在同一个方法包裹（从其他OO语言角度）。</p>
+<p>【实例】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, gender</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.age = age</span><br><span class="line">  <span class="keyword">this</span>.gender = gender</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person1 = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>, <span class="number">16</span>, <span class="string">'male'</span>)</span><br><span class="line"><span class="keyword">let</span> person2 = <span class="keyword">new</span> Person(<span class="string">'Li Lei'</span>, <span class="number">18</span>, <span class="string">'male'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person1.sayHi === persion2.sayHi) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="五、动态原型"><a href="#五、动态原型" class="headerlink" title="五、动态原型"></a>五、动态原型</h2><p>动态原型是在组合模式上进行了一点小“优化”</p>
+<p>【优点】优化封装。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name, age, gender</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.age = age</span><br><span class="line">  <span class="keyword">this</span>.gender = gender</span><br><span class="line">  <span class="comment">// 这里判断条件是一个必须会有的方法就行，不用每个都判断</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.sayHi !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="comment">// 开始给原型赋值方法们</span></span><br><span class="line">    Person.prototype.sayHi = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、寄生构造函数模式"><a href="#六、寄生构造函数模式" class="headerlink" title="六、寄生构造函数模式"></a>六、寄生构造函数模式</h2><p>《高程》提到如果上面的模式都不适用的时候，可以使用寄生构造函数模式，但是我暂时没想到什么场景下有这样的需求。</p>
+<p>【区别】为什么要专门说一下区别，因为这个跟构造函数模式太像了。但是构造函数是直接造一个对象，且对象为this，而寄生构造模式是自己内部新建一个对象（实际上做了new关键字做的事）。外部再new它其实只是为了挂constructor在实例上面而已。</p>
+<p>【特点】<code>说不上优点还是缺点，只能说是特点</code>：寄生构造生产的实例，跟这个构造函数本身是没什么关联的，除了名义上是它的实例之外，其余那些属性和方法都是自己在内部生成和挂载的，跟我们声明和调用那个构造函数（和其原型也）没什么关系。</p>
+<p>【实例】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name, age, gender</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">  o.name = name</span><br><span class="line">  o.age = age</span><br><span class="line">  o.gender = gender</span><br><span class="line">  <span class="keyword">return</span> o <span class="comment">// return 的是自己内部new的实例，外面new操作符给的this，没用到。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person1 = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>, <span class="number">16</span>, <span class="string">'male'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、稳妥构造函数模式"><a href="#七、稳妥构造函数模式" class="headerlink" title="七、稳妥构造函数模式"></a>七、稳妥构造函数模式</h2><p>稳妥构造模式在寄生构造模式的基础上，创建实例的时候去掉了new操作符。</p>
+<p>【特点】没有公共属性，方法内部不引用this对象。适合在安全的环境中（禁用this和new）</p>
+<p>【实例】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name, age, gender</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">  o.name = name</span><br><span class="line">  o.age = age</span><br><span class="line">  o.gender = gender</span><br><span class="line"></span><br><span class="line">  o.sayHi = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(name) <span class="comment">// 【特点】没有使用this引用值</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person1 = Person(<span class="string">'tom'</span>, <span class="number">18</span>, <span class="string">'male'</span>) <span class="comment">// 【特点】不使用new</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/24/vue-wechat-title/" rel="next" title="vue-wechat-title使用注意事项">
+                <i class="fa fa-chevron-left"></i> vue-wechat-title使用注意事项
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/01/types-of-inheritance/" rel="prev" title="JS 中的继承">
+                JS 中的继承 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Willong lin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建对象的方法（构造函数种类）"><span class="nav-number">1.</span> <span class="nav-text">创建对象的方法（构造函数种类）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、工厂模式"><span class="nav-number">1.1.</span> <span class="nav-text">一、工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、构造函数模式"><span class="nav-number">1.2.</span> <span class="nav-text">二、构造函数模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、原型继承"><span class="nav-number">1.3.</span> <span class="nav-text">三、原型继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、组合模式：构造函数-原型模式"><span class="nav-number">1.4.</span> <span class="nav-text">四、组合模式：构造函数+原型模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、动态原型"><span class="nav-number">1.5.</span> <span class="nav-text">五、动态原型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、寄生构造函数模式"><span class="nav-number">1.6.</span> <span class="nav-text">六、寄生构造函数模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、稳妥构造函数模式"><span class="nav-number">1.7.</span> <span class="nav-text">七、稳妥构造函数模式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Willong lin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
