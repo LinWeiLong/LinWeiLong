@@ -123,7 +123,7 @@
 
 
 
-  <title>Archive | Willong's Blog</title>
+  <title>微信返回Vue SPA不刷新页面的问题记录 | Willong's Blog</title>
   
 
 
@@ -142,7 +142,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -236,391 +236,175 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/wechat-backword-refresh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Willong lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Willong's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">微信返回Vue SPA不刷新页面的问题记录</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-07T18:23:40+08:00">2019-07-07</time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 14 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/26/dart-startup/" itemprop="url">
-              
-                <span itemprop="name">Dart语言入门</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-26T23:54:19+08:00" content="2019-12-26">
-          12-26
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/10/algorithm/" itemprop="url">
-              
-                <span itemprop="name">算法学习之题目记录</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-10T23:25:45+08:00" content="2019-10-10">
-          10-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/08/what-is-docker/" itemprop="url">
-              
-                <span itemprop="name">从前端角度学Docker</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-08T17:11:06+08:00" content="2019-10-08">
-          10-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h1 id="问题表现"><a href="#问题表现" class="headerlink" title="问题表现"></a>问题表现</h1><p>在微信内，打开SAP的页面SPA-a，从SPA-a打开外部页面B，从B再返回SPA-a的话，SPA-a页面会呈现Vue数据绑定特征失效的症状，比如load完接口，loading窗口不会根据v-show变化而消失，点击路由跳转SPA，页面也没有出现变化，但实际上路由的hash已经变化了，但是页面内容没有跟着变化。</p>
+<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>本来只是以为是页面loading窗口没有隐藏之类的问题，对loading的值进行核对，观察v-show绑定的值是否有变化，实际上，是有对store里面的loadingSHOW进行赋值的，但template没有变化或者没有进行重新render。</p>
+<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><blockquote>
+<p><strong>浏览器前进/后退缓存</strong></p>
+<p>这里提到一个概念，浏览器前进/后退缓存(Backward/Forward Cache, BF Cache)，当然也有人叫 disk Cache。<br>BF Cache 是一种浏览器优化， HTML 标准并未指定其如何进行缓存，因此缓存行为是各浏览器各自实现，所以不尽相同。<br>由于不是 HTTP 缓存，所以通过头文件缓存设置 no-cache 是无效的。当然也不能以 HTTP 缓存机制来理解 BF Cache。</p>
+<p>作者：Sakura同志<br>链接：<a href="https://juejin.im/post/5caf3462e51d456e7e297b9e" target="_blank" rel="noopener">https://juejin.im/post/5caf3462e51d456e7e297b9e</a><br>来源：掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+</blockquote>
+<p>形成这样的根本原因是微信对于其内置的浏览器进行的“优化”，在iOS下返回SPA-a的时候，微信不会重新请求任何HTML/JS/CSS静态资源，只会把JS重新执行一遍。</p>
+<p>但是按照我的个人理解，JS重新执行一遍，应该也能够形成一样的执行效果才对。实际上的vue整个的生命周期也确实有重新执行，但就是已经失去了双向数据绑定的响应了。</p>
+<p>但实际上表现和期望的不一致，可能是我的理解有偏差。</p>
+<h1 id="问题调试过程"><a href="#问题调试过程" class="headerlink" title="问题调试过程"></a>问题调试过程</h1><ol>
+<li>尝试一：一开始的思路是着重于在返回SPA-a的时候，尝试去刷新SPA-a。由于sessionStorage会计算路由的历史记录count的计数，以此为判断当count等于1（为什么等于1，有另外原因，不在此细说）的时候，尝试使用location.reload()去刷新页面。<ol>
+<li>结果，失败，reaload也没有重新加载页面。</li>
+</ol>
+</li>
+<li>尝试二：由于SPA-a是之前相同业务的迁移，而之前业务并没有出现过这样的情况。通过对比，猜测是由于之前业务是使用动态引入路由页面的，所以对SPA-a的项目进行了相同改造。<ol>
+<li>结果，成功。</li>
+</ol>
+</li>
+</ol>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><ol>
+<li>微信会对之前访问过的页面进行 前进/后退缓存(disk cache)，返回被缓存的页面不会执行静态资源的请求，只会重新执行JS。</li>
+<li>vue SPA在被disk cache之后，返回SPA，不会具备双向绑定的特性。</li>
+<li>第二点可以用异步引入路由组件解决。</li>
+</ol>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/03/http-cache/" itemprop="url">
-              
-                <span itemprop="name">http协议的缓存</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-03T11:52:48+08:00" content="2019-10-03">
-          10-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/28/how-vue-work/" itemprop="url">
-              
-                <span itemprop="name">how-vue-work</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-28T23:48:47+08:00" content="2019-08-28">
-          08-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/28/eventloop/" itemprop="url">
-              
-                <span itemprop="name">JS中的setTimeout和promise是怎么回事？详解event loop机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-28T22:19:01+08:00" content="2019-08-28">
-          08-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/01/types-of-inheritance/" itemprop="url">
-              
-                <span itemprop="name">JS 中的继承</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-01T23:47:50+08:00" content="2019-08-01">
-          08-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/26/types-of-constructors/" itemprop="url">
-              
-                <span itemprop="name">构造函数的发展和种类</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-26T23:51:48+08:00" content="2019-07-26">
-          07-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/24/vue-wechat-title/" itemprop="url">
-              
-                <span itemprop="name">vue-wechat-title使用注意事项</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-24T23:47:53+08:00" content="2019-07-24">
-          07-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/09/use-charles-proxy/" itemprop="url">
-              
-                <span itemprop="name">使用Charles进行抓包调试以及注意事项</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-09T00:13:05+08:00" content="2019-07-09">
-          07-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技巧指南/" rel="tag"># 技巧指南</a>
+          
+            <a href="/tags/微信/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/25/git-submodule-usege/" rel="next" title="Git submodule使用指南">
+                <i class="fa fa-chevron-left"></i> Git submodule使用指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/09/use-charles-proxy/" rel="prev" title="使用Charles进行抓包调试以及注意事项">
+                使用Charles进行抓包调试以及注意事项 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -628,6 +412,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -648,8 +436,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -700,6 +497,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题表现"><span class="nav-number">1.</span> <span class="nav-text">问题表现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题分析"><span class="nav-number">2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题总结"><span class="nav-number">3.</span> <span class="nav-text">问题总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题调试过程"><span class="nav-number">4.</span> <span class="nav-text">问题调试过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">5.</span> <span class="nav-text">结论</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -829,6 +642,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
 
   
 

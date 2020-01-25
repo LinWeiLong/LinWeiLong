@@ -123,7 +123,7 @@
 
 
 
-  <title>Archive | Willong's Blog</title>
+  <title>面试记@YY | Willong's Blog</title>
   
 
 
@@ -142,7 +142,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -236,391 +236,187 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/26/interview-yy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Willong lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Willong's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">面试记@YY</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-26T00:48:17+08:00">2020-01-26</time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 14 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/26/dart-startup/" itemprop="url">
-              
-                <span itemprop="name">Dart语言入门</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-26T23:54:19+08:00" content="2019-12-26">
-          12-26
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/10/algorithm/" itemprop="url">
-              
-                <span itemprop="name">算法学习之题目记录</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-10T23:25:45+08:00" content="2019-10-10">
-          10-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/08/what-is-docker/" itemprop="url">
-              
-                <span itemprop="name">从前端角度学Docker</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-08T17:11:06+08:00" content="2019-10-08">
-          10-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>由于放假前收到YY电商部门的面试邀请，抱着试一试的心态接收了面试邀请。最终结果应该是凉凉了，但是还是有所得，趁着过年期间进行一下总结。</p>
+<h3 id="一面：技术面"><a href="#一面：技术面" class="headerlink" title="一面：技术面"></a>一面：技术面</h3><p>是两位前端技术人员进行面试，此时气氛比较轻松，聊到的东西也比较广，有几个问题比较深刻。</p>
+<ol>
+<li><p>因为简历上写到一个Git的子模块的使用，询问了一下子模块的使用，Git的工作流，为什么不用私有npm（其实后来有搭）</p>
+</li>
+<li><p>现在有一个类似webpack那样的项目（我的解读是有一个核心功能+各种loader/plugin），会怎么对这个项目进行代码管理？</p>
+<ol>
+<li>目录怎样划分？</li>
+<li>内置的一些功能（loader/plugin）怎么划分？</li>
+</ol>
+</li>
+<li><p>如果有一个大型项目（类似内部到处用的脚手架那种），如果这个大包的线上版本有问题，其所依赖的一个包是有问题的，怎么去解决这个问题？我的回答是，这个项目在设计之初，就要提供一个“自检”的阶段</p>
+</li>
+<li><p>说一下VUE的特性，双向绑定的原理（粗略带过），提到Object.defineProperity，依赖收集等等，其实是比较含糊的</p>
+</li>
+<li><p>socket和websocket是一样吗？（直接说不清楚，大概说了一下是长连接）</p>
+</li>
+<li><p>http 1.0、1.1、2.0 之间的区别？</p>
+</li>
+</ol>
+<h3 id="二面：技术面（组长-负责人-面）"><a href="#二面：技术面（组长-负责人-面）" class="headerlink" title="二面：技术面（组长/负责人 面）"></a>二面：技术面（组长/负责人 面）</h3><ol>
+<li>VUE 的双向绑定怎么实现，需要非常详细说，整个源码级别的理解。<ol>
+<li>依赖收集是怎么实现的</li>
+<li>动态化</li>
+<li></li>
+</ol>
+</li>
+<li>画出构造函数+原型之间+实例的关系。关于原型链的一个普通问题，没有答出来，其实很不应该。</li>
+<li>从2展开的一个问题，有一个A的function（内含一个字段+一个方法），现在B想要继承A，直接functionB去call一下A。同样要求描述一下B跟题目2中间的关系链条，也是没有答出来</li>
+<li>说一下对docker的了解</li>
+</ol>
+<h3 id="三面：HR面"><a href="#三面：HR面" class="headerlink" title="三面：HR面"></a>三面：HR面</h3><ol>
+<li>为什么想离开原有的公司？</li>
+<li>觉得自己是一个怎样的人？</li>
+<li>希望去到一个怎样的环境/团队？</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>http 各个版本的区别确实基本上等于空白，只知道http协议的请求头+请求体，缓存控制字段</li>
+<li>Vue的原理不够清晰，表达含糊</li>
+<li>JS的原型和构造函数等几个之间的关系</li>
+</ol>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/03/http-cache/" itemprop="url">
-              
-                <span itemprop="name">http协议的缓存</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-03T11:52:48+08:00" content="2019-10-03">
-          10-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/28/how-vue-work/" itemprop="url">
-              
-                <span itemprop="name">how-vue-work</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-28T23:48:47+08:00" content="2019-08-28">
-          08-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/28/eventloop/" itemprop="url">
-              
-                <span itemprop="name">JS中的setTimeout和promise是怎么回事？详解event loop机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-28T22:19:01+08:00" content="2019-08-28">
-          08-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/01/types-of-inheritance/" itemprop="url">
-              
-                <span itemprop="name">JS 中的继承</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-01T23:47:50+08:00" content="2019-08-01">
-          08-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/26/types-of-constructors/" itemprop="url">
-              
-                <span itemprop="name">构造函数的发展和种类</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-26T23:51:48+08:00" content="2019-07-26">
-          07-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/24/vue-wechat-title/" itemprop="url">
-              
-                <span itemprop="name">vue-wechat-title使用注意事项</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-24T23:47:53+08:00" content="2019-07-24">
-          07-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/09/use-charles-proxy/" itemprop="url">
-              
-                <span itemprop="name">使用Charles进行抓包调试以及注意事项</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-09T00:13:05+08:00" content="2019-07-09">
-          07-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+            <a href="/tags/总结/" rel="tag"># 总结</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/26/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -628,6 +424,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -648,8 +448,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -700,6 +509,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一面：技术面"><span class="nav-number">1.</span> <span class="nav-text">一面：技术面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二面：技术面（组长-负责人-面）"><span class="nav-number">2.</span> <span class="nav-text">二面：技术面（组长/负责人 面）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三面：HR面"><span class="nav-number">3.</span> <span class="nav-text">三面：HR面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -829,6 +654,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
 
   
 

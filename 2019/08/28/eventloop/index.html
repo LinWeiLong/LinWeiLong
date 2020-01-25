@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="我是谁">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta property="og:site_name" content="Willong&#39;s Blog">
+<meta property="og:description" content="我是谁">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-01-25T16:43:41.592Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于我">
+<meta name="twitter:description" content="我是谁">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/about/">
+
+
+
+
+
+  <title>JS中的setTimeout和promise是怎么回事？详解event loop机制 | Willong's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Willong's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/28/eventloop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Willong lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Willong's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS中的setTimeout和promise是怎么回事？详解event loop机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-28T22:19:01+08:00">2019-08-28</time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在说内容之前，先发一道面试题，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例题1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise1'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise2'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这个题目比较简单，应该能够看出来结果是：script start -&gt; script end -&gt; promise1 -&gt; promise2 -&gt; setTimeout</p>
+<p>那为什么是这个顺序呢，结合一些网上的文章，我尝试用自己的理解或者说法去记录这个知识点。</p>
+<h1 id="浏览器内核渲染进程介绍"><a href="#浏览器内核渲染进程介绍" class="headerlink" title="浏览器内核渲染进程介绍"></a>浏览器内核渲染进程介绍</h1><p>在浏览器的每一个Tab，都被认为是一个渲染进程，渲染进程内部分为多个线程，这多个线程之间相合作，各自管理着各自专注的领域的事情：</p>
+<ol>
+<li>GUI渲染线程<ul>
+<li>渲染页面，计算布局和绘制样式</li>
+<li>重绘和回流时会执行</li>
+<li>和JS引擎线程互斥 （防止结果混乱不可预期）</li>
+</ul>
+</li>
+<li>JS引擎线程<ul>
+<li>解析和执行JS代码</li>
+<li>单线程</li>
+<li>和GUI渲染互斥（防止结果混乱不可预期）</li>
+</ul>
+</li>
+<li>事件触发线程<ul>
+<li>管理事件的循环，鼠标点击/滚动、setTimeout、ajax</li>
+<li>在达到条件时，将回调方法放入JS引擎的执行队列</li>
+</ul>
+</li>
+<li>定时器触发线程<ul>
+<li>setTimeout和setInterval的管理线程</li>
+<li>定时任务由定时器触发线程计时（如果定时器不多的页面，这个线程岂不是很空闲）</li>
+<li>当计时完毕，通知事件触发线程</li>
+</ul>
+</li>
+<li>异步http请求线程<ul>
+<li>发起和处理异步请求的线程</li>
+<li>当请求完成，有回调时，通知事件触发线程干活</li>
+</ul>
+</li>
+</ol>
+<h1 id="Event-loop机制介绍"><a href="#Event-loop机制介绍" class="headerlink" title="Event loop机制介绍"></a>Event loop机制介绍</h1><p><img src="http://ww3.sinaimg.cn/large/006y8mN6gy1g6frdhv7ecj30k00bmmxw.jpg" alt="Eventloop 介绍"></p>
+<p>首先我们要明确一个点，JS是从上而下执行的，然后遇到异步的方法的时候，再去进行一些处理，这个异步处理的机制就是要去了解的Event loop。</p>
+<p>在JS执行过程中，浏览器分配堆内存去存储数据，而JS方法的执行上下文（调用栈）则是如同其名，是用栈结构存储的。</p>
+<p>在浏览器JS执行的过程中，遵守一种策略：</p>
+<ol>
+<li>执行栈里面的任务，遇到异步的任务，先交给对应的线程去处理</li>
+<li>执行完栈内的任务后，询问事件触发线程，是否有新的回调（来自多处）可执行，有的话，执行栈被重新添加任务执行</li>
+<li>重复1-2步</li>
+</ol>
+<h1 id="那什么是宏任务、什么是微任务呢？"><a href="#那什么是宏任务、什么是微任务呢？" class="headerlink" title="那什么是宏任务、什么是微任务呢？"></a>那什么是宏任务、什么是微任务呢？</h1><p>我觉得说这两个之前，得先解释一下浏览器的JS引擎线程跟GUI线程之间的执行顺序先。上面提到这两个线程是互斥的，那么就有一个机制，让他们能够有序地执行。这个机制，就是轮流…对就是这么简单。JS引擎执行完，轮到GUI引擎执行一下，如此往复：JS -&gt; GUI -&gt; JS -&gt; GUI。那么又有新的问题了，JS引擎怎么才叫执行完一次呢？其实就是上面Event loop机制提到的第一步执行完了就算一次执行完。</p>
+<p>一个执行栈的同步执行的代码，被认为是<code>宏任务</code>。</p>
+<p>eg1：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.style = <span class="string">'background:black'</span>;</span><br><span class="line"><span class="built_in">document</span>.body.style = <span class="string">'background:red'</span>;</span><br><span class="line"><span class="built_in">document</span>.body.style = <span class="string">'background:blue'</span>;</span><br><span class="line"><span class="built_in">document</span>.body.style = <span class="string">'background:grey'</span>;</span><br><span class="line"><span class="comment">// body的颜色只会变一次，因为都是同步的，同一个宏任务内执行完成。</span></span><br><span class="line"><span class="comment">// 去到GUI引擎那里只会认为是要把背景色变成灰色</span></span><br></pre></td></tr></table></figure>
+
+<p>eg2:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.style = <span class="string">'background:blue'</span>;</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.body.style = <span class="string">'background:black'</span></span><br><span class="line">&#125;,<span class="number">0</span>)</span><br><span class="line"><span class="comment">// body背景色先变蓝然后马上变黑</span></span><br><span class="line"><span class="comment">// 说明是分成2次宏任务执行，第一次变蓝，然后GUI执行了，第二次宏任务设置变黑，然后GUI再执行</span></span><br></pre></td></tr></table></figure>
+
+<p>那说完宏任务，<em>什么是微任务</em>?</p>
+<p><code>微任务</code>是在宏任务执行指挥立即执行的任务。包括Promise.then process.nextTick</p>
+<p>微任务在宏任务和GUI之间执行。所以上面的JS -&gt; GUI -&gt; JS -&gt; GUI流程可以改成：宏任务 -&gt; 微任务 -&gt; GUI -&gt; 宏任务 -&gt; 微任务 -&gt; GUI ···</p>
+<p>eg3:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.style = <span class="string">'background:blue'</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">document</span>.body.style = <span class="string">'background:black'</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line"><span class="comment">// 输出1 、 3、 2</span></span><br><span class="line"><span class="comment">// GUI : 背景直接变黑，没有变蓝</span></span><br></pre></td></tr></table></figure>
+
+<p>图示：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8mN6gy1g6ftkm4jztj30at0gpmxk.jpg" alt="任务流程"></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://juejin.im/post/5d5b4c2df265da03dd3d73e5" target="_blank" rel="noopener">从多线程到Event Loop全面梳理</a><br><a href="https://juejin.im/post/5d552275e51d456201486e24" target="_blank" rel="noopener">JS(浏览器)事件环 (宏、微任务)</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/01/types-of-inheritance/" rel="next" title="JS 中的继承">
+                <i class="fa fa-chevron-left"></i> JS 中的继承
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/28/how-vue-work/" rel="prev" title="how-vue-work">
+                how-vue-work <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Willong lin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#浏览器内核渲染进程介绍"><span class="nav-number">2.</span> <span class="nav-text">浏览器内核渲染进程介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Event-loop机制介绍"><span class="nav-number">3.</span> <span class="nav-text">Event loop机制介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#那什么是宏任务、什么是微任务呢？"><span class="nav-number">4.</span> <span class="nav-text">那什么是宏任务、什么是微任务呢？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Willong lin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
